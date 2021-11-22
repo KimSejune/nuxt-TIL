@@ -1,6 +1,6 @@
 <template>
   <div>
-    <form @submit="login" method="post">
+    <form @submit.prevent="login" method="post">
       <div>
         <label for="username">username: </label>
         <input id="username" type="text" v-model="username" />
@@ -24,8 +24,13 @@ export default {
     };
   },
   methods: {
-    login() {
-      console.log("login :", this.username, this.passowrd);
+    async login() {
+      const userData = {
+        username: this.username,
+        password: this.password,
+      };
+      const response = await this.$axios.$post("/member/login", userData);
+      console.log("login resposne ", response);
     },
   },
 };
